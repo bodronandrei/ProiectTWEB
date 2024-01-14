@@ -1,14 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import env from 'dotenv';
-// import DB_Init from './entities/DB_Init.js';
-// import createDBRouter from './routes/createDBRouter.js';
-// import articolRouter from './routes/ArticolRoute.js';
-// import conferintaRouter from './routes/ConferintaRoute.js';
-// import feedbackRouter from './routes/FeedbackRoute.js';
-// import utilizatorRouter from './routes/UtilizatorRoute.js';
-// import versiuneArticolRouter from './routes/VersiuneArticolRoute.js';
-
-//https://github.com/cimpeanuionut/Seminar12ts/blob/main/backend/commands.txt
+import db_init from './entities/db_init';
+import organizatorRouter from './routes/organizatorRoutes';
+import reviewerRouter from './routes/reviewerRoutes';
+import autorRouter from './routes/autorRoutes';
+import createDbRouter from './routes/createDBRoutes';
 
 env.config();
 
@@ -19,14 +16,19 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-// DB_Init();
 
-// app.use('/api', createDBRouter);
-// app.use('/api', articolRouter);
-// app.use('/api', conferintaRouter);
-// app.use('/api', feedbackRouter);
-// app.use('/api', utilizatorRouter);
-// app.use('/api', versiuneArticolRouter);
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: 'GET,PUT,PATCH,POST,DELETE'
+  };
+  
+app.use(cors(corsOptions));
+db_init();
+app.use("/api", createDbRouter);
+app.use("/api/organizator", organizatorRouter);
+app.use("/api/reviewer", reviewerRouter);
+app.use("/api/autor", autorRouter);
 
 let port = process.env.PORT || 8000;
 app.listen(port);

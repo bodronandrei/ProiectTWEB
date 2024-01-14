@@ -11,5 +11,6 @@
     "lib": ["es2015"]
   },
   "include": ["src/**/*.ts"],
+  //"include": ["src/**/*.ts", "src/index.ts", "src/dataAccess"],
   "exclude": ["node_modules"]
 }
